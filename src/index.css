@@ -12,7 +12,11 @@ code {
     monospace;
 }
 
-
+td{
+  margin: 16px;
+  padding-left: 8px;
+  text-align: center;
+}
 button{
   margin: 4px;
 }

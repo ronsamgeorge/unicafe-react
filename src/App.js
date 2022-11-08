@@ -37,7 +37,11 @@ const DisplayResult = (props) => {
 
 const StatisticLine = (props) => {
   return(
-    <p>{props.text} : {props.rating}</p>
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.rating}</td>
+    </tr>
+    
   )
 }
 
