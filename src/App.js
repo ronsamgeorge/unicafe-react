@@ -31,12 +31,27 @@ const App = () => {
   const [goodRating, setGood] = useState(0);
   const [badRating, setBad] = useState(0);
   const [neutralRating, setNeutral] = useState(0);
+  const [allRatings, setAll] = useState(0);
 
-  const updateGood = () => setGood(goodRating + 1);
+  const updateGood = () => {
+    setGood(goodRating + 1);
+    updateAll();
+  }
   
-  const updateBad = () => setBad(badRating + 1);
+  const updateBad = () => {
+    setBad(badRating + 1);
+    updateAll();
+  }
 
-  const updateNeutral = () => setNeutral(neutralRating + 1);
+  const updateNeutral = () =>{
+     setNeutral(neutralRating + 1);
+     updateAll();
+  }
+
+  const updateAll = () => {
+    setAll(allRatings + 1);
+    console.log("Updating All", allRatings)
+  }
   
   
   return (
@@ -50,6 +65,7 @@ const App = () => {
       <DisplayResult text="Good" rating={goodRating} />
       <DisplayResult text="Neutal" rating={neutralRating} />
       <DisplayResult text="Bad" rating={badRating} />
+      <DisplayResult text="All" rating={allRatings} />
       
     </div>
   );
