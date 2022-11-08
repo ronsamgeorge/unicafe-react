@@ -18,7 +18,6 @@ const Button = (props) => {
 
 const DisplayResult = (props) => {
   const {goodRating, badRating, neutralRating, allRatings, averageRating, positivePercent} = props;
-
   if (goodRating === 0 && badRating === 0 && neutralRating === 0){
     return (
       <p>No Feedback yet. Click Review button to submit feedback</p>
@@ -31,7 +30,7 @@ const DisplayResult = (props) => {
       <StatisticLine text="Bad" rating={badRating} />
       <StatisticLine text="All" rating={allRatings} />
       <StatisticLine text="Average" rating={averageRating} />
-      <StatisticLine text="Percent" rating={positivePercent} />
+      <StatisticLine text="Percent" rating={positivePercent+"%"} />
     </div>
   )
 }
@@ -95,7 +94,7 @@ const App = () => {
   }
   
   const updatePercent = (tempAll, tempGood) => {
-    setPercent((tempAll/tempAll)*100);
+    setPercent((tempGood/tempAll)*100);
   }
 
 
