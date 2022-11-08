@@ -53,39 +53,49 @@ const App = () => {
   const [averageRating, setAverage] = useState(0);
   const [positivePercent, setPercent] = useState(0);
 
+  //Create an Function to call all the aggregation functons and pass all the temp values through that 
+  const updateAggregations = (tempGood, tempBad, tempNeutral) => {
+    const tempAll = tempGood + tempBad + tempNeutral;
+
+    updateAll(tempAll);
+    updateAverage(tempAll,tempGood,tempBad, tempNeutral);
+    updatePercent(tempAll,tempGood);
+  }
+
+
+
   const updateGood = () => {
-    setGood(goodRating + 1);
-    updateAll();
+    var tempGood = goodRating+1;
+    updateAggregations(tempGood,badRating, neutralRating);
+    setGood(tempGood);
+    
+    
   }
   
   const updateBad = () => {
-    setBad(badRating + 1);
-    updateAll();
+    var tempBad = badRating + 1;
+    updateAggregations(goodRating, tempBad, neutralRating);
+    setBad(tempBad);
   }
 
   const updateNeutral = () =>{
-     setNeutral(neutralRating + 1);
-     updateAll();
+    var tempNeutral = neutralRating + 1;
+    updateAggregations(goodRating, badRating, tempNeutral);
+    setNeutral(tempNeutral);
   }
 
-  const updateAll = () => {
-    setAll(allRatings + 1);
-    updateAverage();
-    updatePercent();
+  const updateAll = (tempAll) => {
+    setAll(tempAll);
   }
 
-  const updateAverage = () => {
-    var totalRating = goodRating + badRating + neutralRating;
-    var averageDeviation = goodRating - badRating;
-    console.log(goodRating)
-    console.log(totalRating, averageDeviation);
-    setAverage(averageDeviation / totalRating);
-    console.log(goodRating);
+  const updateAverage = (tempAll, tempGood, tempBad, tempNeutral) => {
+    console.log(tempAll)
+    var averageDeviation = tempGood - tempBad;
+    setAverage(averageDeviation / tempAll);
   }
   
-  const updatePercent = () => {
-    var totalRating = goodRating + badRating + neutralRating;
-    setPercent((goodRating/totalRating)*100);
+  const updatePercent = (tempAll, tempGood) => {
+    setPercent((tempAll/tempAll)*100);
   }
 
 
