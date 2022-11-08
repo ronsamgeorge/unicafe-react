@@ -17,13 +17,31 @@ const Button = (props) => {
 }
 
 const DisplayResult = (props) => {
-  const {text, rating} = props;
+  const {goodRating, badRating, neutralRating, allRatings, averageRating, positivePercent} = props;
+
+  if (goodRating === 0 && badRating === 0 && neutralRating === 0){
+    return (
+      <p>No Feedback yet. Click Review button to submit feedback</p>
+    )
+  }
   return(
     <div>
-      <p>{text} : {rating}</p>
+      <StatisticLine text="Good" rating={goodRating} />
+      <StatisticLine text="Neutal" rating={neutralRating} />
+      <StatisticLine text="Bad" rating={badRating} />
+      <StatisticLine text="All" rating={allRatings} />
+      <StatisticLine text="Average" rating={averageRating} />
+      <StatisticLine text="Percent" rating={positivePercent} />
     </div>
   )
 }
+
+const StatisticLine = (props) => {
+  return(
+    <p>{props.text} : {props.rating}</p>
+  )
+}
+
 
 
 const App = () => {
@@ -32,6 +50,8 @@ const App = () => {
   const [badRating, setBad] = useState(0);
   const [neutralRating, setNeutral] = useState(0);
   const [allRatings, setAll] = useState(0);
+  const [averageRating, setAverage] = useState(0);
+  const [positivePercent, setPercent] = useState(0);
 
   const updateGood = () => {
     setGood(goodRating + 1);
@@ -50,9 +70,25 @@ const App = () => {
 
   const updateAll = () => {
     setAll(allRatings + 1);
-    console.log("Updating All", allRatings)
+    updateAverage();
+    updatePercent();
+  }
+
+  const updateAverage = () => {
+    var totalRating = goodRating + badRating + neutralRating;
+    var averageDeviation = goodRating - badRating;
+    console.log(goodRating)
+    console.log(totalRating, averageDeviation);
+    setAverage(averageDeviation / totalRating);
+    console.log(goodRating);
   }
   
+  const updatePercent = () => {
+    var totalRating = goodRating + badRating + neutralRating;
+    setPercent((goodRating/totalRating)*100);
+  }
+
+
   
   return (
     <div>
@@ -62,11 +98,7 @@ const App = () => {
       <Button onClick={updateBad} text="Bad" />
 
       <Display text={"Summary"} />
-      <DisplayResult text="Good" rating={goodRating} />
-      <DisplayResult text="Neutal" rating={neutralRating} />
-      <DisplayResult text="Bad" rating={badRating} />
-      <DisplayResult text="All" rating={allRatings} />
-      
+      <DisplayResult goodRating={goodRating} badRating={badRating} neutralRating={neutralRating} averageRating={averageRating} positivePercent={positivePercent} allRatings={allRatings}/>
     </div>
   );
 }
